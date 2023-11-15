@@ -2,8 +2,14 @@ import { Gift, LifeBuoy, Package, Receipt, UserCircle } from "lucide-react";
 import { PropsWithChildren } from "react";
 import { Search } from "./_components/search-box";
 import Sidebar, { SidebarItem } from "./_components/sidebar";
+import { getAuthSesssion } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default function AdminLayout({ children }: PropsWithChildren) {
+export default async function AdminLayout({ children }: PropsWithChildren) {
+  const session = await getAuthSesssion();
+  if (!session?.user) return redirect(`/auth/sign-in`);
+  if (session.user.role !== "ADMIN") return redirect("/");
+
   return (
     <div className="flex">
       <Sidebar>

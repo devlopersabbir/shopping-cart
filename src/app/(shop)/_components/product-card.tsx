@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -32,9 +33,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </Link>
         {Date.now() - new Date(product.createdAt).getTime() <
         1000 * 60 * 60 * 24 * 7 ? (
-          <span className="bg-yellow-300 px-1 w-fit rounded-full text-sm">
-            New
-          </span>
+          <Badge className="w-fit">New</Badge>
         ) : null}
         <CardDescription>
           {product.description.slice(0, 200)}...
