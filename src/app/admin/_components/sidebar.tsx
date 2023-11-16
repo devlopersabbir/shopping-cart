@@ -1,9 +1,11 @@
 "use client";
 import { Icons } from "@/components/icons";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ChevronFirst, ChevronLast } from "lucide-react";
+import { ChevronFirst, ChevronLast, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { User } from "next-auth";
 import { usePathname } from "next/navigation";
 import { createContext, useContext, useState } from "react";
 
@@ -14,7 +16,13 @@ const SidebarContext = createContext<SidebarContextType>({
   expanded: true,
 });
 
-export default function Sidebar({ children }: { children: React.ReactNode }) {
+export default function Sidebar({
+  children,
+  user,
+}: {
+  children: React.ReactNode;
+  user: User;
+}) {
   const [expanded, setExpanded] = useState<boolean>(true);
 
   return (
@@ -44,7 +52,36 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
           <ul className="flex-1 px-3">{children}</ul>
         </SidebarContext.Provider>
 
-        <div className="border-t flex p-3">Admin</div>
+        <div className="border-t flex p-3">
+          {user?.name ? (
+            <>
+              <Avatar className="h-8 w-8">
+                {user.image ? (
+                  <AvatarImage src={user.image} alt={user.name} />
+                ) : null}
+                <AvatarFallback>
+                  {user.name
+                    .split(" ")
+                    .map((n, i) => (i < 2 ? n.split("")[0] : null))}
+                </AvatarFallback>
+              </Avatar>
+              <div
+                className={cn(
+                  "flex justify-between items-center overflow-hidden transition-all",
+                  expanded ? " w-52 ml-3" : "w-0"
+                )}
+              >
+                <div className="leading-4">
+                  <h4 className="font-semibold">{user.name}</h4>
+                  <span className="text-xs text-muted-foreground">
+                    {user.email}
+                  </span>
+                </div>
+                <MoreHorizontal size={20} />
+              </div>
+            </>
+          ) : null}
+        </div>
       </nav>
     </aside>
   );

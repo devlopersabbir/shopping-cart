@@ -1,15 +1,11 @@
 import { Icons } from "@/components/icons";
-import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import ShoppingCartComp from "./shopping-cart";
-import { getAuthSesssion } from "@/lib/auth";
-import { UserNav } from "./user-nav";
-import { getCart } from "@/lib/cart";
+import UserNav from "./user-nav";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default async function ShopHeader() {
-  const session = await getAuthSesssion();
-  const cart = await getCart();
-
   return (
     <header className="border-b shadow fixed top-0 w-full bg-background z-10">
       <div className="max-w-5xl mx-auto flex h-14 items-center px-4">
@@ -18,19 +14,12 @@ export default async function ShopHeader() {
           <h1 className="text-2xl">Shopping Cart</h1>
         </Link>
         <div className="ml-auto flex items-center space-x-4">
-          <ShoppingCartComp cart={cart} />
-          {session?.user ? (
-            <UserNav user={session.user} />
-          ) : (
-            <Link
-              href="/auth/sign-up"
-              className={buttonVariants({
-                size: "sm",
-              })}
-            >
-              Get Started
-            </Link>
-          )}
+          <Suspense fallback={<Skeleton className="h-8 w-8 rounded-full" />}>
+            <ShoppingCartComp />
+          </Suspense>
+          <Suspense fallback={<Skeleton className="h-8 w-8 rounded-full" />}>
+            <UserNav />
+          </Suspense>
         </div>
       </div>
     </header>

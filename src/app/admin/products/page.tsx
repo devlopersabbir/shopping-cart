@@ -2,20 +2,11 @@ import { buttonVariants } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import PageHeading from "../_components/page-heading";
-import {
-  Table,
-  TableCaption,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
-import prisma from "@/lib/db";
+import { Suspense } from "react";
+import ProductsTable from "./_components/products-table";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default async function ProductPage() {
-  const products = await prisma.product.findMany();
-
   return (
     <div className="hidden h-full flex-1 flex-col space-y-8 md:flex">
       <PageHeading
@@ -29,35 +20,17 @@ export default async function ProductPage() {
         }
       />
 
-      <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">ID</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead className="text-right">Price</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {products.length < 1 ? (
-            <p>No product in database</p>
-          ) : (
-            products.map((product) => (
-              <TableRow key={product.id}>
-                <TableCell className="font-medium">{product.id}</TableCell>
-                <TableCell>
-                  <Link href={`/admin/products/edit/${product.id}`}>
-                    {product.name}
-                  </Link>
-                </TableCell>
-                <TableCell className="text-right">
-                  ${product.price.toFixed(2)}
-                </TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+      <Suspense
+        fallback={
+          <div className="space-y-4">
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+              <Skeleton key={i} className="h-10 w-full" />
+            ))}
+          </div>
+        }
+      >
+        <ProductsTable />
+      </Suspense>
     </div>
   );
 }
