@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "./_components/product-card";
 import Pagination from "../_components/pagination";
+import AddToCartButton from "./_components/addto-cart-button";
+import { incrementProductQuantity } from "./actions";
 
 type PageProps = {
   searchParams: {
@@ -52,12 +54,10 @@ export default async function HomePage({
             <p className="text-muted-foreground">
               {featureProduct.description.slice(0, 300)}...
             </p>
-            <Link
-              href={`/products/${featureProduct.id}`}
-              className={buttonVariants()}
-            >
-              Cheak It Out
-            </Link>
+            <AddToCartButton
+              incrementProductQuantity={incrementProductQuantity}
+              productId={featureProduct.id}
+            />
           </div>
         </figure>
       )}

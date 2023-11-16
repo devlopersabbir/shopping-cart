@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import AddToCartButton from "./addto-cart-button";
+import { incrementProductQuantity } from "../actions";
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
@@ -41,12 +43,10 @@ export default function ProductCard({ product }: { product: Product }) {
       </CardHeader>
       <CardFooter className="flex justify-between">
         <p className="text-lg font-semibold">${product.price.toFixed(2)}</p>
-        <Link
-          href={`/products/${product.id}`}
-          className={cn(buttonVariants({ size: "sm" }))}
-        >
-          Add to cart
-        </Link>
+        <AddToCartButton
+          incrementProductQuantity={incrementProductQuantity}
+          productId={product.id}
+        />
       </CardFooter>
     </Card>
   );

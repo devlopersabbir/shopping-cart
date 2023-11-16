@@ -42,7 +42,7 @@ export const authOptions: AuthOptions = {
       if (user) {
         return {
           ...token,
-          id: user.id,
+          id: Number(user.id),
           email: user.email,
           role: user.role,
         };

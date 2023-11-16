@@ -4,9 +4,11 @@ import Link from "next/link";
 import ShoppingCartComp from "./shopping-cart";
 import { getAuthSesssion } from "@/lib/auth";
 import { UserNav } from "./user-nav";
+import { getCart } from "@/lib/cart";
 
 export default async function ShopHeader() {
   const session = await getAuthSesssion();
+  const cart = await getCart();
 
   return (
     <header className="border-b shadow fixed top-0 w-full bg-background z-10">
@@ -16,7 +18,7 @@ export default async function ShopHeader() {
           <h1 className="text-2xl">Shopping Cart</h1>
         </Link>
         <div className="ml-auto flex items-center space-x-4">
-          <ShoppingCartComp cart={null} />
+          <ShoppingCartComp cart={cart} />
           {session?.user ? (
             <UserNav user={session.user} />
           ) : (
