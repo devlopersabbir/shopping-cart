@@ -47,9 +47,7 @@ export default function SignInPage() {
       }
 
       setIsLoading(false);
-
-      const redirect_url = searchParams.get("callback") ?? "/";
-      window.location.replace(redirect_url);
+      window.location.replace(searchParams.get("callback") ?? "/");
     } catch (error: any) {
       toast.error("Something went wrong.");
     } finally {

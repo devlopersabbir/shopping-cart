@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 
 export default async function AdminLayout({ children }: PropsWithChildren) {
   const session = await getAuthSesssion();
-  if (!session?.user) return redirect(`/auth/sign-in`);
+  if (!session?.user) return redirect(`/auth/sign-in?callback=/admin`);
   if (session.user.role !== "ADMIN") return redirect("/");
 
   return (
