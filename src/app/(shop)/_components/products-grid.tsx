@@ -26,9 +26,11 @@ export default async function ProductGrid({ page }: Props) {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-        {(currentPage === 1 ? products.splice(1) : products).map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {(currentPage === 1 ? products.splice(1) : products).map(
+          (product: any) => (
+            <ProductCard key={product.id} product={product} />
+          )
+        )}
       </div>
 
       {totalItemCount > pageSize ? (
