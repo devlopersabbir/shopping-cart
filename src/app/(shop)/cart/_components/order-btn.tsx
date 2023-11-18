@@ -22,7 +22,8 @@ const OrderButton = ({ cartId, action }: TOrderButton) => {
             await action(cartId);
             router.push("/success");
           } catch (err: any) {
-            toast.error("Fail to place order!");
+            toast.error("You are not logged in!");
+            router.push("/auth/sign-in");
           }
         });
       }}

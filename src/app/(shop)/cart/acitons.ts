@@ -64,27 +64,29 @@ export async function setProductQuantity(productId: number, quantity: number) {
 
 export async function placeOrder(cartId: number) {
   const session = await getAuthSesssion();
-  if (!session?.user) return redirect("/auth/sign-in");
 
   await prisma.$transaction(async (tx) => {
-    if (!session?.user) return redirect("/auth/sign-in");
-    // create new order
-    await tx.order.create({
-      data: {
-        cartId,
-        customerId: session.user.id,
-      },
-    });
-    // updated cart when order placed
-    // we should update letter (that's not good way😁)
-    await tx.cart.updateMany({
-      where: {
-        userId: session.user.id,
-      },
-      data: {
-        userId: null,
-      },
-    });
-    revalidatePath("/cart");
+    if (session?.user) {
+      // create new order
+      await tx.order.create({
+        data: {
+          cartId,
+          customerId: session.user.id,
+        },
+      });
+      // updated cart when order placed
+      // we should update letter (that's not good way😁)
+      await tx.cart.updateMany({
+        where: {
+          userId: session.user.id,
+        },
+        data: {
+          userId: null,
+        },
+      });
+      revalidatePath("/cart");
+    } else {
+      throw new Error("Unauthorized");
+    }
   });
 }
