@@ -39,15 +39,14 @@ model User {
 }
 
 model Product {
-  id          Int         @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   name        String
   description String
   price       Int
   image       String
   cartItems   CartItem[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  OrderItem   OrderItem[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model Cart {
@@ -59,6 +58,7 @@ model Cart {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Order     Order[]
 }
 
 model CartItem {
@@ -79,23 +79,10 @@ model Order {
   customerId Int
   customer   User @relation(fields: [customerId], references: [id])
 
-  ammount         Int
-  shippingAddress String?
-  status          OrderStatus @default(PENDING)
+  cartId Int
+  cart   Cart @relation(fields: [cartId], references: [id], onDelete: NoAction)
 
-  OrderItem OrderItem[]
-}
-
-model OrderItem {
-  id      Int   @id @default(autoincrement())
-  orderId Int
-  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
-
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
-
-  quantity Int
-  ammount  Int
+  status OrderStatus @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

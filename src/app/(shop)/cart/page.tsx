@@ -3,7 +3,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { getCart } from "@/lib/cart";
 import Link from "next/link";
 import CartItem from "./_components/cart-item";
-import { setProductQuantity } from "./acitons";
+import { placeOrder, setProductQuantity } from "./acitons";
+import OrderButton from "./_components/order-btn";
 
 export default async function CartPage() {
   const cart = await getCart();
@@ -40,9 +41,7 @@ export default async function CartPage() {
             <Link href="/" className={buttonVariants({ variant: "outline" })}>
               Go to shopping
             </Link>
-            <Link href="/checkout" className={buttonVariants()}>
-              Checkout
-            </Link>
+            <OrderButton cartId={cart.id} action={placeOrder} />
           </div>
         </div>
       ) : null}
