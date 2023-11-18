@@ -46,7 +46,7 @@ export default function UserNavDropdown({ user }: { user: User }) {
         <DropdownMenuSeparator />
         {user.role === "ADMIN" ? (
           <DropdownMenuItem asChild>
-            <Link href="/admin/dashboard">Admin pannel</Link>
+            <Link href="/admin">Admin pannel</Link>
           </DropdownMenuItem>
         ) : null}
         <DropdownMenuGroup>
