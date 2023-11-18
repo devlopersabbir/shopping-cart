@@ -35,7 +35,6 @@ export default function CartItem({ item, setProductQuantity }: Props) {
         alt={product.name}
         className="rounded-lg"
       />
-
       <div className="flex w-full flex-col flex-auto  items-center gap-4 md:flex-row ">
         <h2 className="text-lg font-semibold">{product.name}</h2>
         <h4 className="text-md text-muted-foreground">

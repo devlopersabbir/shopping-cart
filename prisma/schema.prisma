@@ -76,12 +76,12 @@ model CartItem {
 model Order {
   id Int @id @default(autoincrement())
 
-  customerId Int?
-  customer   User? @relation(fields: [customerId], references: [id])
+  customerId Int
+  customer   User @relation(fields: [customerId], references: [id])
 
   ammount         Int
   shippingAddress String?
-  status          OrderStatus @default(PROCECCING)
+  status          OrderStatus @default(PENDING)
 
   OrderItem OrderItem[]
 }

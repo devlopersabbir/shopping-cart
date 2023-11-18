@@ -3,6 +3,7 @@ import { compare } from "bcrypt";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "./db";
+import { mergeAnonymousCartIntoUserCart } from "./cart";
 
 export const authOptions: AuthOptions = {
   session: {
@@ -66,6 +67,7 @@ export const authOptions: AuthOptions = {
   events: {
     async signIn({ user }) {
       // Do anyting after user sign in
+      await mergeAnonymousCartIntoUserCart(user.id);
     },
   },
 };
