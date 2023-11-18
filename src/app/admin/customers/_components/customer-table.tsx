@@ -13,7 +13,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default async function CustomerTable() {
   const customers = await prisma.user.findMany();
-  console.log("customer", customers);
 
   return (
     <Table>

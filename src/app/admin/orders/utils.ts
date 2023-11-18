@@ -1,0 +1,8 @@
+export type TOrderStatus = "COMPLETED" | "PROCECCING" | "PENDING" | "CANCELED";
+
+export const OrderStatus = {
+  COMPLETED: "COMPLETED",
+  PROCECCING: "PROCECCING",
+  PENDING: "PENDING",
+  CANCELED: "CANCELED",
+};

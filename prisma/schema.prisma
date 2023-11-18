@@ -19,6 +19,7 @@ enum OrderStatus {
   COMPLETED
   PROCECCING
   PENDING
+  CANCELED
 }
 
 model User {
