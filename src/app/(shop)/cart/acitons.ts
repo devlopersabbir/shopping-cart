@@ -64,6 +64,7 @@ export async function setProductQuantity(productId: number, quantity: number) {
 
 export async function placeOrder(cartId: number) {
   const session = await getAuthSesssion();
+  if (!session?.user) return redirect("/auth/sign-in");
 
   await prisma.$transaction(async (tx) => {
     if (!session?.user) return redirect("/auth/sign-in");
