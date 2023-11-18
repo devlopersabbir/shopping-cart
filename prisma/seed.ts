@@ -34,8 +34,8 @@ async function main() {
     "Admin with admin@admin.com and password admin123 has been created"
   );
 
-  await generateProducts(100);
-  console.log("100 Fake product created");
+  await generateProducts(10);
+  console.log("10 Fake product created");
 }
 main()
   .then(async () => {
